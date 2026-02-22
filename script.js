@@ -18,11 +18,7 @@ let MOVE_STEP = 5;
 
 // Google Fonts list (exclude system fonts). These will be loaded on demand.
 let googleFonts = [
-    'Inter', 'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Merriweather',
-    'Oswald', 'Raleway', 'Source Sans Pro', 'Playfair Display', 'Ubuntu',
-    'Nunito', 'Pacifico', 'Lobster', 'Bree Serif', 'Poppins', 'Quicksand',
-    'Dancing Script', 'Crimson Text', 'Fira Sans', 'Work Sans', 'PT Sans',
-    'Libre Baskerville', 'Cabin', 'Dosis'
+    'Inter'
 ];
 
 // Cache of loaded fonts
