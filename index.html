@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Certificate Generator Pro - Create professional certificates with ease">
+    <title>Certificate Generator Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- If you ran the local fonts downloader, include the generated fonts.css to prefer local fonts -->
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <!-- Google Fonts will be loaded on demand via WebFont.load if local fonts are not present -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>Certificate Generator </h1>
+            </div>
+            <div class="header-actions">
+                <div class="theme-switcher">
+                    <button class="theme-btn" id="themeToggle" title="Switch Theme" aria-label="Toggle theme">
+                        <i class="fas fa-sun" id="themeIcon"></i>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown" role="menu">
+                        <button class="theme-option" data-theme="light" role="menuitem">
+                            <i class="fas fa-sun"></i>
+                            Light
+                        </button>
+                        <button class="theme-option" data-theme="dark" role="menuitem">
+                            <i class="fas fa-moon"></i>
+                            Dark
+                        </button>
+                        <button class="theme-option" data-theme="system" role="menuitem">
+                            <i class="fas fa-desktop"></i>
+                            System
+                        </button>
+                    </div>
+                </div>
+       
+                <button class="btn btn-primary" id="generateBtn">
+                    <i class="fas fa-download"></i>
+                    Generate Certificates
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <aside class="sidebar left-sidebar">
+            <div class="panel-header">
+                <i class="fas fa-upload"></i>
+                <h2>Upload Files</h2>
+            </div>
+
+            <div class="upload-section">
+                <div class="file-upload">
+                    <label for="excelInput" class="upload-label">
+                        <i class="fas fa-file-excel"></i>
+                        <span>Upload Excel File</span>
+                        <small>(.xlsx, .xls)</small>
+                    </label>
+                    <input type="file" id="excelInput" accept=".xlsx, .xls" hidden>
+                </div>
+
+                <div class="file-upload">
+                    <label for="templateInput" class="upload-label">
+                        <i class="fas fa-image"></i>
+                        <span>Upload Template</span>
+                        <small>(image files)</small>
+                    </label>
+                    <input type="file" id="templateInput" accept="image/*" hidden>
+                </div>
+            </div>
+
+            <div class="field-selection">
+                <div class="panel-header">
+                    <i class="fas fa-list"></i>
+                    <h2>Field Selection</h2>
+                </div>
+                <select id="fieldSelect" class="field-select" aria-label="Select field to edit">
+                    <option value="">Select a field to edit</option>
+                </select>
+                <div id="fieldCheckboxes" class="field-checkboxes" role="group" aria-label="Fields to include"></div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="canvas-container">
+                <div class="canvas-header">
+                    <h2>Preview</h2>
+                    <div class="canvas-controls">
+                        <button class="btn btn-secondary" id="resetAllBtn">
+                            <i class="fas fa-undo"></i>
+                            Reset All
+                        </button>
+                    </div>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="preview" role="img" aria-label="Certificate preview"></canvas>
+                    <div class="canvas-placeholder" id="canvasPlaceholder">
+                        <i class="fas fa-image"></i>
+                        <p>Upload a template image to get started</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar right-sidebar">
+            <div class="panel-header">
+                <i class="fas fa-palette"></i>
+                <h2>Text Styling</h2>
+            </div>
+
+            <div class="style-controls">
+                <div class="control-group">
+                    <label for="fontSelect"><i class="fas fa-font"></i> Font Family</label>
+                    <div class="font-controls">
+                        <input type="text" id="fontSearch" placeholder="Search fonts..." class="font-search" aria-label="Search fonts">
+                        <select id="fontSelect" class="font-select" aria-label="Select font family">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier">Courier</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="fontSize"><i class="fas fa-text-height"></i> Font Size</label>
+                    <div class="size-control">
+                        <input type="range" id="fontSizeRange" min="8" max="72" value="16" class="size-slider" aria-label="Font size slider">
+                        <input type="number" id="fontSize" value="16" min="8" max="72" class="size-input" aria-label="Font size">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-align-left"></i> Text Alignment</label>
+                    <div class="align-buttons" role="group">
+                        <button class="align-btn active" data-align="left" aria-label="Align left">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+                        <button class="align-btn" data-align="center" aria-label="Align center">
+                            <i class="fas fa-align-center"></i>
+                        </button>
+                        <button class="align-btn" data-align="right" aria-label="Align right">
+                            <i class="fas fa-align-right"></i>
+                        </button>
+                    </div>
+                    <select id="textAlign" hidden>
+                        <option value="left">Left</option>
+                        <option value="center">Center</option>
+                        <option value="right">Right</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="textColor"><i class="fas fa-palette"></i> Text Color</label>
+                    <div class="color-control">
+                        <input type="color" id="textColor" value="#000000" class="color-picker" aria-label="Text color">
+                        <span class="color-value" id="colorValue">#000000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Position controls removed -->
+        </aside>
+    </div>
+
+    <!-- Patch Notes Modal -->
+  
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2026 Certificate Generator. All rights reserved.</p>
+            </div>
+            <div class="footer-right">
+                <p>Developed by
+                   
+                        Neeraj
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- External Libraries -->
+<!-- JSZip from jsDelivr -->
+<!-- External Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" referrerpolicy="no-referrer"></script>
+
+<!-- Use jsDelivr CDN instead (more reliable) -->
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+
+<!-- Main Application Script -->
+<script src="script.js"></script>
+</body>
+
+</html>
